@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.GradeDao">
+  <resultMap type="com.cs539.project.entity.Grade" id="GradeMap">
+  	<id property="gId" column="GId"/>
+  	<result property="grade" column="Grade"/>
+  	<association property="student" column="SId"
+			javaType="com.cs539.project.entity.Student">
+			<id property="sId" column="SId" />
+			<result property="sId" column="SId"/>
+			<result property="fName" column="FName"/>
+			<result property="mName" column="MName"/>
+			<result property="lName" column="LName"/>
+	</association>
+	<association property="section" column="SecId"
+			javaType="com.cs539.project.entity.Section">
+			<result property="secId" column="SecId" />
+			<result property="secNo" column="SecNo"/>
+			<result property="sem" column="Sem"/>
+			<result property="year" column="Year"/>
+	</association>
+  </resultMap>
+	<select id="getGradeList" resultMap="GradeMap">
+  		SELECT G.`Grade`, STU.`SId`, STU.`FName`, STU.`MName`, STU.`LName`, SEC.`SecId`, SEC.`SecNo`, SEC.`Sem`, SEC.`Year`
+		FROM GRADE G
+		LEFT JOIN STUDENT STU ON G.`SId` = STU.`SId`
+		LEFT JOIN SECTION SEC ON G.`SecId` = SEC.`SecId`;
+  </select>
+  </mapper>

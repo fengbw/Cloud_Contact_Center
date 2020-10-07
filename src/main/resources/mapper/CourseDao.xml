@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.CourseDao">
+  <resultMap type="com.cs539.project.entity.Course" id="CourseMap">
+  	<result property="cCode" column="CCode"/>
+  	<result property="coName" column="CoName"/>
+  	<result property="credits" column="Credits"/>
+  	<result property="level" column="Level"/>
+  	<association property="department" column="DCode"
+			javaType="com.cs539.project.entity.Department">
+			<id property="dCode" column="DCode" />
+			<result property="dName" column="DName" />
+	</association>
+  </resultMap>
+	<select id="getAllCourses" resultMap="CourseMap">
+  		SELECT  C.CCode, C.CoName, C.Credits,
+				C.Level, D.DCode, D.DName		
+		FROM    COURSE C LEFT JOIN DEPARTMENT D ON C.DCode=D.DCode;
+  </select>
+  </mapper>

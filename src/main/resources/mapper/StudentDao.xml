@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.StudentDao">
+  <resultMap type="com.cs539.project.entity.Student" id="StudentMap">
+  	<result property="sId" column="SId"/>
+  	<result property="fName" column="FName"/>
+  	<result property="mName" column="MName"/>
+  	<result property="lName" column="LName"/>
+  	<result property="dob" column="DOB"/>
+  	<result property="addr" column="Addr"/>
+  	<result property="phone" column="Phone"/>
+  	<result property="major" column="Major"/>
+  	<association property="department" column="DCode"
+			javaType="com.cs539.project.entity.Department">
+			<id property="dCode" column="DCode" />
+			<result property="dName" column="DName" />
+	</association>
+  </resultMap>
+  <select id="getStudentList" resultMap="StudentMap">
+  		SELECT  S.SId, S.FName, S.MName, S.LName, S.DOB, S.Addr, S.Phone, S.Major, D.DName	
+		FROM    STUDENT S LEFT JOIN DEPARTMENT D ON S.DCode = D.DCode;
+  </select>
+  </mapper>

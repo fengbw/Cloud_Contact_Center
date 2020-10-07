@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.InstructorDao">
+  <resultMap type="com.cs539.project.entity.Instructor" id="InstructorMap">
+  	<id property="id" column="Id"/>
+  	<result property="rank" column="Rank"/>
+  	<result property="iName" column="IName"/>
+  	<result property="iOffice" column="IOffice"/>
+  	<result property="iPhone" column="IPhone"/>
+  	<association property="department" column="DCode"
+			javaType="com.cs539.project.entity.Department">
+			<id property="dCode" column="DCode" />
+			<result property="dName" column="DName" />
+	</association>
+  </resultMap>
+	<select id="getAllInstructors" resultMap="InstructorMap">
+  		SELECT I.Id, I.Rank,
+		I.IName, I.IOffice, I.IPhone, D.DCode, D.DName
+		FROM INSTRUCTOR I LEFT JOIN DEPARTMENT D ON I.DCode=D.DCode;
+  </select>
+  </mapper>

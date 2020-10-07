@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.CollegeDao">
+  <resultMap type="com.cs539.project.entity.College" id="CollegeMap">
+  	<id property="cName" column="CName"/>
+  	<result property="cPhone" column="CPhone"/>
+  	<result property="cOffice" column="COffice"/>
+  	<association property="dean" column="Dean_id"
+			javaType="com.cs539.project.entity.Instructor">
+			<id property="id" column="Id" />
+			<result property="iName" column="IName" />
+	</association>
+  </resultMap>
+  <select id="getAllColleges" resultMap="CollegeMap">
+  		SELECT C.CName, C.CPhone,
+		C.COffice, I.Id, I.IName
+		FROM COLLEGE C LEFT JOIN INSTRUCTOR I ON C.Dean_id=I.Id;
+  </select>
+  </mapper>

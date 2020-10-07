@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.SectionDaysTimeDao">
+  <resultMap type="com.cs539.project.entity.SectionDaysTime" id="SectionDaysTimeMap">
+  	<id property="sd_id" column="SD_id"/>
+  	<result property="mon" column="Mon"/>
+  	<result property="tue" column="Tue"/>
+  	<result property="wed" column="Wed"/>
+  	<result property="thu" column="Thu"/>
+  	<result property="fri" column="Fri"/>
+  	<result property="sat" column="Sat"/>
+  	<result property="sun" column="Sun"/>
+  	<result property="startTime" column="StartTime"/>
+  	<result property="endTime" column="EndTime"/>
+  	<association property="section" column="SecId"
+			javaType="com.cs539.project.entity.Section">
+			<id property="secId" column="SecId" />
+			<result property="secNo" column="SecNo"/>
+			<result property="sem" column="Sem"/>
+			<result property="year" column="Year"/>
+	</association>
+  </resultMap>
+	<select id="getSecDaysTimeList" resultMap="SectionDaysTimeMap">
+  		SELECT SD.`Mon`, SD.`Tue`, SD.`Wed`, SD.`Thu`, SD.`Fri`, SD.`Sat`, SD.`Sun`, SD.`StartTime`, SD.`EndTime`, SEC.`SecId`
+		FROM `SECTION_DAYSTIME` SD LEFT JOIN `SECTION` SEC ON SD.`SecId` = SEC.`SecId`;
+  </select>
+  </mapper>

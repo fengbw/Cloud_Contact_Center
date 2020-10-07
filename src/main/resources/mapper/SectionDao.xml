@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.SectionDao">
+  <resultMap type="com.cs539.project.entity.Section" id="SectionMap">
+  	<id property="secId" column="SecId"/>
+  	<result property="secNo" column="SecNo"/>
+  	<result property="sem" column="Sem"/>
+  	<result property="year" column="Year"/>
+  	<result property="roomNo" column="RoomNo"/>
+  	<result property="bIdg" column="BIdg"/>
+  	<association property="course" column="CCode"
+			javaType="com.cs539.project.entity.Course">
+			<id property="cCode" column="CCode" />
+			<result property="coName" column="CoName"/>
+			<result property="credits" column="Credits" />
+	</association>
+	<association property="teacher" column="Id"
+			javaType="com.cs539.project.entity.Instructor">
+			<id property="id" column="Id" />
+			<result property="iName" column="IName"/>
+	</association>
+  </resultMap>
+	<select id="getSectionList" resultMap="SectionMap">
+  		SELECT S.`SecNo`, S.`Sem`, S.`Year`, S.`RoomNo`, S.`BIdg`, C.`CoName`, C.`Credits`, I.`IName`
+		FROM SECTION S
+		LEFT JOIN INSTRUCTOR I ON S.`Id` = I.`Id`
+		LEFT JOIN COURSE C ON S.`CCode` = C.`CCode`;
+  </select>
+  </mapper>

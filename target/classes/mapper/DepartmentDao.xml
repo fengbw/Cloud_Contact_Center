@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+  <mapper namespace="com.cs539.project.dao.DepartmentDao">
+  <resultMap type="com.cs539.project.entity.Department" id="DepartmentMap">
+  	<id property="dCode" column="DCode"/>
+  	<result property="dName" column="DName"/>
+  	<result property="dPhone" column="DPhone"/>
+  	<result property="dOffice" column="DOffice"/>
+  	<result property="cStartDate" column="CStartDate"/>
+  	<association property="chair" column="Chair_id"
+			javaType="com.cs539.project.entity.Instructor">
+			<id property="id" column="Id" />
+			<result property="iName" column="IName" />
+	</association>
+	<association property="college" column="CName"
+			javaType="com.cs539.project.entity.College">
+			<id property="cName" column="CName" />
+	</association>
+  </resultMap>
+  <select id="getDepartmentList" resultMap="DepartmentMap">
+  		SELECT  D.DName, D.DPhone, D.DOffice, D.CStartDate, I.iName, C.CName	
+		FROM    DEPARTMENT D, COLLEGE C, INSTRUCTOR I
+		WHERE   D.CName = C.CName AND D.Chair_id = I.Id
+  </select>
+  </mapper>
